@@ -17,14 +17,13 @@ Open a commandline at the directory's location, and create an image and run it t
 
 ```commandline
 docker build -f Dockerfile -t kpoc:latest .
-```
-```commandline
-docker run -p 81:80 kpoc
+docker create -p 81:80 --name kpoc-client kpoc
+docker start kpoc-client
 ```
 
 Now we can see the application is running at http://localhost:81
 
-Open another commandline and make sure it is using the Docker for Desktop context by running the following:
+Make sure it is using the Docker for Desktop context by running the following:
 
 ```commandline
 kubectl config use-context docker-desktop
@@ -37,7 +36,8 @@ kubectl apply -f deployment.yaml
 ```
 
 Now we should se the application is deployed and load balanced at http://localhost:82
-As you refresh the page multiple times, the server accessed count should increase and the host id should change once in a while.
+
+As you refresh the page multiple times, the host id should change once in a while, and the amount of times the server is accessed should increase and is bound to the host id.
 
 ### Clean-up
 
@@ -45,6 +45,14 @@ When you're done run:
 
 ```commandline
 kubectl delete -f deployment.yaml
+```
+
+and:
+
+```commandline
+docker stop kpoc-client
+docker rm kpoc-client
+docker rmi kpoc
 ```
 
 ## License
