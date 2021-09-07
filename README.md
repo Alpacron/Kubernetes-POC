@@ -38,6 +38,8 @@ kubectl apply -f deployment.yaml
 
 Now we should se the application is deployed and load balanced at http://localhost:82
 
+### Clean-up
+
 When you're done run:
 
 ```commandline
