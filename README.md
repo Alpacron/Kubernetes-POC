@@ -37,6 +37,7 @@ kubectl apply -f deployment.yaml
 ```
 
 Now we should se the application is deployed and load balanced at http://localhost:82
+As you refresh the page multiple times, the server accessed count should increase and the host id should change once in a while.
 
 ### Clean-up
 
