@@ -5,6 +5,7 @@
 
 <button mat-raised-button (click)="requestBackendHost()">REQUEST SERVER HOST</button>
 <mat-slide-toggle (change)="asyncRequest($event)" style="padding: 12px 0px;">keep requesting</mat-slide-toggle>
+<button mat-raised-button (click)="killHost()" color="warn">KILL ACTIVE HOST</button>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
