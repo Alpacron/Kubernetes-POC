@@ -24,7 +24,6 @@ spec:
   selector:
     matchLabels:
       app: kpoc
-  replicas: 4
   template:
     metadata:
       labels:
@@ -36,3 +35,16 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 80
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: kpoc
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kpoc
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
