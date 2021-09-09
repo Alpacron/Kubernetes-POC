@@ -72,8 +72,4 @@ The server is now deployed on http://localhost:8000
 ## Research
 Before creating this implementation I had to do some research on Kubernetes. After that I needed to research this particular implementation. To do this research properly, I need to come up with some questions on the topics, so that I find the answers I need. For this research I will be using the DOT framework.
 
-The research I did during the project can be found [here](../master/kubernetes&20research.pdf).
-
-## License
-
-This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.
+The research I did during the project can be found [here](https://www.overleaf.com/read/ryrqzzqjwrwy).
