@@ -35,6 +35,7 @@ export class RequestComponent {
     if (!this.requesting) {
       this.requesting = true;
   
+      // Request address from server
       let response: null | Address = await this.http.get<Address>(this.host).toPromise().then(res => {
         this.error = "";
         return res;
@@ -45,8 +46,13 @@ export class RequestComponent {
   
       if (response != null) {
         if (!this.dataToDisplay.map(e => e.host).includes(response.host)) {
+          // Add address to table
           this.dataToDisplay.push(response);
+
+          // Sort by host name
+          this.dataToDisplay.sort((a, b) => (a.host > b.host) ? 1 : ((b.host > a.host) ? -1 : 0))
         } else {
+          // Update Address
           this.dataToDisplay[this.dataToDisplay.map(e => e.host).indexOf(response.host)] = response;
         }
   
