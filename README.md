@@ -9,27 +9,21 @@
 - Docker
 - Kubectl
 
-### Setup
+### Production
 
 First, clone the directory.
 
-Open a commandline at the directory's location, and create an image from the Dockerfile.
+Make sure Docker Desktop is running and you have Kubernetes enabled.
+
+Open a commandline at the directory's location, and create an image from the Dockerfile in the corresponding folders.
 
 ```commandline
-docker build -f Dockerfile -t kpoc:latest .
+cd ./client
+docker build -t kpoc-client:latest .
+cd ../server
+docker build -t kpoc-server:latest .
+cd ..
 ```
-
-#### Single container deployment
-
-(Optional) Create and start a container:
-```commandline
-docker create -p 81:80 --name kpoc-client kpoc
-docker start kpoc-client
-```
-
-Now we can see the application is running in a single container at http://localhost:81
-
-#### Kubernetes Cluster
 
 Make sure it is using the Docker for Desktop context by running the following:
 ```commandline
@@ -41,17 +35,9 @@ Use kubectl to send the YAML file to Kubernetes by running the following command
 kubectl apply -f deployment.yaml
 ```
 
-Now we should see the application is deployed and load balanced at http://localhost:82
+Now we should see the application is deployed at http://localhost:83
 
-As you refresh the page multiple times, the host id should change once in a while, and the amount of times the server is accessed should increase and is bound to the host id.
-
-### Clean-up
-
-To terminate the container run:
-```commandline
-docker stop kpoc-client
-docker rm kpoc-client
-```
+#### Clean-up
 
 To terminate the kubernetes cluster run:
 ```commandline
@@ -60,7 +46,8 @@ kubectl delete -f deployment.yaml
 
 To remove the image run:
 ```commandline
-docker rmi kpoc
+docker rmi kpoc-client
+docker rmi kpoc-server
 ```
 
 ## License

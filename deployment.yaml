@@ -1,38 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kpoc-server
+spec:
+  selector:
+    matchLabels:
+      app: kpoc-server
+  template:
+    metadata:
+      labels:
+        app: kpoc-server
+    spec:
+      containers:
+        - name: kpoc-server
+          image: kpoc-server:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: kpoc-load-balancer
+  name: kpoc-server-load-balancer
 spec:
   selector:
-    app: kpoc
+    app: kpoc-server
   ports:
-  - protocol: TCP
-    port: 82
-    targetPort: 80
-  # clusterIP: 10.96.0.12
+    - protocol: TCP
+      port: 82
+      targetPort: 80
   type: LoadBalancer
-# status:
-#   loadBalancer:
-#     ingress:
-#     - ip: 192.0.2.127
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: kpoc-auto-scaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kpoc-server
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kpoc
+  name: kpoc-client
 spec:
   selector:
     matchLabels:
-      app: kpoc
-  replicas: 4
+      app: kpoc-client
   template:
     metadata:
       labels:
-        app: kpoc
+        app: kpoc-client
     spec:
       containers:
-      - name: kpoc
-        image: kpoc:latest
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 80
+        - name: kpoc-client
+          image: kpoc-client:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 81
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kpoc-client-load-balancer
+spec:
+  selector:
+    app: kpoc-client
+  ports:
+    - protocol: TCP
+      port: 83
+      targetPort: 81
+  type: LoadBalancer

@@ -1,0 +1,19 @@
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Server</mat-label>
+    <input matInput [(ngModel)]="host">
+</mat-form-field>
+
+<button mat-raised-button (click)="requestBackendHost()">REQUEST SERVER HOST</button>
+<mat-slide-toggle (change)="asyncRequest($event)" style="padding: 12px 0px;">keep requesting</mat-slide-toggle>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+        <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+        <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+</table>
+
+<mat-error>{{error}}</mat-error>
