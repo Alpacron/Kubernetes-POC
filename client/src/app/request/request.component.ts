@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Component } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
@@ -11,11 +11,11 @@ export interface Address {
 }
 
 @Component({
-  selector: 'app-config',
-  templateUrl: './config.component.html',
-  styleUrls: ['./config.component.css']
+  selector: 'app-request',
+  templateUrl: './request.component.html',
+  styleUrls: ['./request.component.css']
 })
-export class ConfigComponent {
+export class RequestComponent {
   constructor(private http: HttpClient) { }
 
   displayedColumns: string[] = ['host', 'count'];
