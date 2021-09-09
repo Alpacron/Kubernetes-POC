@@ -9,7 +9,7 @@
 - Docker
 - Kubectl
 
-### Setup
+### Production
 
 First, clone the directory.
 
@@ -25,8 +25,6 @@ docker build -t kpoc-server:latest .
 cd ..
 ```
 
-#### Kubernetes Cluster
-
 Make sure it is using the Docker for Desktop context by running the following:
 ```commandline
 kubectl config use-context docker-desktop
@@ -39,7 +37,7 @@ kubectl apply -f deployment.yaml
 
 Now we should see the application is deployed at http://localhost:83
 
-### Clean-up
+#### Clean-up
 
 To terminate the kubernetes cluster run:
 ```commandline
