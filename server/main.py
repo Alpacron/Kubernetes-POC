@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-import socket;
-import os;
+import socket
 
 count = 0
 
@@ -10,7 +9,14 @@ app = FastAPI(
     description="A simple demo for kubernetes.",
     version="1.0.0"
 )
-app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_methods=['DELETE'], allow_headers=["*"])
+
+origins = [
+    'http://localhost:83',
+    'http://localhost:4200'
+]
+
+app.add_middleware(CORSMiddleware, allow_origins=origins, allow_headers=["*"])
+
 
 @app.get("/")
 def info():
@@ -18,8 +24,4 @@ def info():
 
     count += 1
 
-    return { "host": socket.getfqdn(), "count": count}
-
-@app.delete("/kill-pod")
-def kill():
-    os.system('kill %d' % os.getpid())
+    return {"host": socket.getfqdn(), "count": count}

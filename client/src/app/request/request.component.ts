@@ -69,10 +69,6 @@ export class RequestComponent {
       await this.requestBackendHost();
     }
   }
-
-  killHost() {
-    this.http.delete<Address>(this.host);
-  }
 }
 
 class ExampleDataSource extends DataSource<Address> {
