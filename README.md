@@ -40,6 +40,15 @@ kubectl apply -f deployment.yaml
 
 Now we should see the application is deployed at http://localhost:83
 
+#### Analysis
+
+While the Cluster is active, deleting pods should result in a new one being created and the old container and pod being removed. Pods can be deleted with the following command:
+```commandline
+kubectl delete pod [pod name]
+```
+
+You can also see when running two frontend dashboard's at a time, the amount of times a server is accessed is about equally distributed, from this we can conclude the load balancing is indeed working as intended. (This assuming two pods are up and running, the pod auto-scaler takes some time to start)
+
 #### Clean-up
 
 To terminate the kubernetes cluster run:
@@ -47,7 +56,7 @@ To terminate the kubernetes cluster run:
 kubectl delete -f deployment.yaml
 ```
 
-To remove the image run:
+To remove the images run:
 ```commandline
 docker rmi kpoc-client
 docker rmi kpoc-server
