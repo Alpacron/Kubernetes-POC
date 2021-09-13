@@ -1,3 +1,4 @@
+# Server deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,6 +45,7 @@ spec:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50
 ---
+# Client deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -67,12 +69,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kpoc-client-load-balancer
+  name: kpoc-client-service
 spec:
+  type: NodePort
   selector:
     app: kpoc-client
   ports:
-    - protocol: TCP
-      port: 83
+    - port: 83
       targetPort: 81
-  type: LoadBalancer
