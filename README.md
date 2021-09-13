@@ -1,7 +1,14 @@
 # Kubernetes-POC
 
 ## About
+
 This is a simple proof of concept for setting up a load-balanced and secure kubernetes-cluster for a frontend and backend.
+
+### Architecture
+
+This POC consists of both a frontend- and backend application. The frontend is build up from an Angular TS and the backend is build with python and the fastapi library. Both are containerized using a Docker file.
+
+The Kubernetes-Cluster consists of a Load Balancing service and deployment for both frontend an backend and has a horizontal pod auto-scaler for the backend.
 
 ## Getting started
 
