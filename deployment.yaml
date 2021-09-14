@@ -22,20 +22,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kpoc-server-load-balancer
+  name: kpoc-server-service
 spec:
+  type: LoadBalancer
   selector:
     app: kpoc-server
   ports:
     - protocol: TCP
       port: 82
       targetPort: 80
-  type: LoadBalancer
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: kpoc-auto-scaler
+  name: kpoc-server-auto-scaler
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -71,9 +71,10 @@ kind: Service
 metadata:
   name: kpoc-client-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: kpoc-client
   ports:
-    - port: 83
+    - protocol: TCP
+      port: 83
       targetPort: 81
