@@ -23,7 +23,7 @@ export class RequestComponent {
   dataToDisplay: Address[] = [];
   dataSource = new ExampleDataSource(this.dataToDisplay);
 
-  host: string = "http://localhost:82"
+  host: string = "http://api.localhost"
 
   checked: boolean = false;
 

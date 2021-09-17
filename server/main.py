@@ -10,13 +10,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-origins = [
-    'http://localhost:83',
-    'http://localhost:4200'
-]
-
-app.add_middleware(CORSMiddleware, allow_origins=origins, allow_headers=["*"])
-
+app.add_middleware(CORSMiddleware, allow_origins=['http://localhost'])
 
 @app.get("/")
 def info():
