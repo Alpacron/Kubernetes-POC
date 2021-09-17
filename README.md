@@ -8,7 +8,7 @@ This is a simple proof of concept for setting up a load-balanced and secure kube
 
 This POC consists of both a frontend- and backend application. The frontend is build up from an Angular TS and the backend is build with python and the fastapi library. Both are containerized using a Docker file.
 
-The Kubernetes-Cluster consists of a deployment for both applications, a load balancing service and horizontal pod auto-scaler for the backend and a NodePort for the frontend.
+The Kubernetes-Cluster consists of a deployment and ClusterIP service for both applications, a horizontal pod auto-scaler for the backend. It also includes an ingress for both the frontend and backend to deploy the application.
 
 ## Getting started
 
@@ -25,8 +25,7 @@ First, clone the directory.
 
 Make sure Docker Desktop is running and you have Kubernetes enabled.
 
-Open a commandline at the directory's location, and create an image from the Dockerfile in the respective folders.
-
+Open a commandline at the directory's location, and create an image's from the Dockerfile's in the respective folders.
 ```commandline
 cd ./client
 docker build -t kpoc-client:latest .
@@ -40,12 +39,21 @@ Make sure it is using the Docker for Desktop context by running the following:
 kubectl config use-context docker-desktop
 ```
 
-Use kubectl to send the YAML file to Kubernetes by running the following command:
+Use kubectl to setup an ingress and deploy the kubernetes cluster with the following command:
 ```commandline
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/aws/deploy.yaml
 kubectl apply -f deployment.yaml
 ```
 
-Now we should see the application is deployed at http://localhost:83
+Now we should see the application is deployed at http://localhost.
+(This was tested on Google Chrome, some browser might not support this aproach)
+
+To get an overview setup the dashboard:
+```commandline
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+REF: [kubernetes dashboard](https://www.replex.io/blog/how-to-install-access-and-add-heapster-metrics-to-the-kubernetes-dashboard)
 
 #### Analysis
 
@@ -61,6 +69,13 @@ You can also see when running two frontend dashboard's at a time, the amount of 
 To terminate the kubernetes cluster run:
 ```commandline
 kubectl delete -f deployment.yaml
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/aws/deploy.yaml
+```
+
+To remove the dashboard run:
+```commandline
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+kubectl delete -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
 To remove the images run:
